@@ -20,7 +20,7 @@ def order_points(pts):
     # whereas the botton-left point will have the largest difference
     diff = np.diff(pts, axis=1)
     rect[1] = pts[np.argmin(diff)]
-    rect[3] = pts[np.argmin(diff)]
+    rect[3] = pts[np.argmax(diff)]
 
     # return the ordered coordinates
     return rect
