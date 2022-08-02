@@ -2,11 +2,12 @@
 import numpy as np
 import cv2
 
+
 def order_points(pts):
     # initialize a list of coordinates that will be ordered
     # allocate memory for the four ordered points
     # ordered by top-left, top-right, botton-right, botton-left
-    rect = np.zeros((4,2), dtype="float32")
+    rect = np.zeros((4, 2), dtype="float32")
 
     # the top-left point will have the smallest x+y sum
     # whereas the botton-right point will have the largest x+y sum
@@ -40,7 +41,7 @@ def four_point_transform(image, pts):
     maxWidth = max(int(widthA), int(widthB))
 
     # compute the height of the new image,
-    # which will be the maximum distance 
+    # which will be the maximum distance
     # btw the top-right and bottom-right y-coordinates
     # or the top-left and bottom-left y-coordinates
     heightA = np.sqrt(((tr[0] - br[0]) ** 2) + ((tr[1] - br[1]) ** 2))
@@ -55,15 +56,16 @@ def four_point_transform(image, pts):
         [0, 0],
         [maxWidth - 1, 0],
         [maxWidth - 1, maxHeight - 1],
-        [0, maxHeight - 1]], dtype = "float32")
-    
+        [0, maxHeight - 1]], dtype="float32")
+
     # compute the perspective transform matrix and then apply it
     # cv2.getPerspectiveTansform function requires two arguments
     #    'rect' - list of 4 ROI points in the original image
     #    'dst'  - list of transformed image
     #     returns M, which is the actual transformation matrix
-    M = cv2.getPerspectiveTransform(rect, dst) 
-    warped = cv2.warpPerspective(image, M, (maxWidth, maxHeight)) # top-down view
+    M = cv2.getPerspectiveTransform(rect, dst)
+    warped = cv2.warpPerspective(
+        image, M, (maxWidth, maxHeight))  # top-down view
 
     # return the warped image
     return warped
